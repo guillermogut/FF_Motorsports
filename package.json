@@ -1,0 +1,19 @@
+{
+  "name": "ff_motorsports",
+  "version": "1.0.0",
+  "description": "here goes nothing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guillermogut/FF_Motorsports.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guillermogut/FF_Motorsports/issues"
+  },
+  "homepage": "https://github.com/guillermogut/FF_Motorsports#readme"
+}
