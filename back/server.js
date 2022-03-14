@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 // app.get('/ree', (req, result) => {
 
 //     console.log("in ree");
-//     pool.query('alter table test.orders add column customerid INT',
+//     pool.query('alter table test.orders add column orderid serial primary key',
 //         (req, res) => {
 //         //console.log(res.status);
 //             })
@@ -40,20 +40,20 @@ app.get('/', (req, res) => {
     
     
 // })
-app.post('/', (req, res) => {
-    const query = 'insert into test.customers( first_name,last_name,email) VALUES($1, $2, $3)'
-    const query2 = 'INSERT INTO test.orders (customerid, date, description,make,model,plate,vin,year) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)'
-    pool.query(query2,
-        [1,'2022-03-01','test description','KIA','OPTIMA','123abc','123testingvinNumber',2022],
-        (req, result) => {
+// app.post('/', (req, res) => {
+//     const query = 'insert into test.customers( first_name,last_name,email) VALUES($1, $2, $3)'
+//     const query2 = 'INSERT INTO test.orders (customerid, date, description,make,model,plate,vin,year) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)'
+//     pool.query(query2,
+//         [1,'2022-03-01','test description','KIA','OPTIMA','123abc','123testingvinNumber',2022],
+//         (req, result) => {
         
-        //res.send(result.rows);
+//         //res.send(result.rows);
 
 
-    })
+//     })
     
     
-})
+// })
 // app.post('/customer-add', (req, res) => {
 //     console.log(req.body);
    
@@ -84,14 +84,27 @@ app.post('/customer-get', (req, res) => {
     
     console.log(" received from customer get");
     //console.log(req.first);
-    const { first_name, last_name, email } = req.body;
-    
+    const { first_name, last_name, email, customerid,id} = req.body;
+    console.log(customerid)
     const test = 'select * from test.customers';
     //'select * from test.customers where first_name = $1 AND last_name $2 AND email = $3'
-    const query = 'select * from test.customers where first_name = $1';
-    const values = [first_name];
+    let query = 'select * from test.customers where first_name = $1';
+    let values = [];
+    if (customerid) {
+        console.log('getting customer by id')
+
+        query = 'select * from test.customers where id = $1';
+        values = [customerid];
+    }
+    else {
+        console.log('getting customer by first name')
+        query = 'select * from test.customers where first_name = $1';
+        values = [first_name];
+    }
+    
     pool.query(query,values,
         (req, result) => {
+            console.log('it be working')
             console.log(result.rows);
             res.send(result.rows);
 
@@ -104,20 +117,33 @@ app.post('/customer-get', (req, res) => {
 app.post('/orders', (req, res) => {
     console.log("IN THE ORDERS")
     
-    const { first_name, last_name, email,id } = req.body;
-    console.log(id)
-    const test = 'select * from test.orders';
-    //'select * from test.customers where first_name = $1 AND last_name $2 AND email = $3'
-    const query = 'select * from test.orders where customerid = $1';
-    const values = [id];
-    pool.query(query,
+    const { first_name, last_name, email,id, orderId } = req.body;
+    console.log(req.body)
+    console.log(orderId)
+    let query =''
+    let values = [];
+    if (orderId) {
+        query = 'select * from test.orders where orderid = $1'
+        values = [orderId]
+        
+        pool.query(query,
         values,
         (req, result) => {
-            //console.log(result.rows);
+            console.log(result.rows);
             res.send(result.rows);
-
-
         })
+    }
+    else  {
+        query = 'select * from test.orders where customerid = $1';
+        values = [id];
+        pool.query(query,
+        values,
+        (req, result) => {
+            console.log(result.rows);
+            res.send(result.rows);
+        })
+    }
+    
     
 })
 

@@ -28,7 +28,7 @@ const Customer_Get = () => {
                 //setCustomer(res); 
 
                 
-                setCustomers([...customers,...res.data]);// must change this, it doesnt use data from the server and just assumes it will come back
+                setCustomers([...customers,...res.data]);
             })
             .catch((error) =>
             {
