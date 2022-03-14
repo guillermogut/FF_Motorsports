@@ -2,7 +2,7 @@
   "name": "ff_motorsports",
   "version": "1.0.0",
   "description": "here goes nothing",
-  "main": "./",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cd front && npm i && npm start",
