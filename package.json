@@ -4,10 +4,11 @@
   "description": "here goes nothing",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd front && npm i && npm start",
-    "server": "cd back && npm i && npm run startDev"
-
+    "start": "cd ./back/ && npm install && node server.js",
+    "heroku-postbuild": "cd ./front/ && npm install && npm run build",
+    "backend": "cd ./back/ && nodemon server.js ",
+    "frontend": "cd ./front/ && npm run start",
+    "test":"cd ./front/ && npm run test"
   },
   "repository": {
     "type": "git",
