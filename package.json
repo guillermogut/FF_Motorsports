@@ -4,7 +4,7 @@
   "description": "here goes nothing",
   "main": "index.js",
   "scripts": {
-    "start": "cd ./back/ && npm install && node server.js",
+    "start": "cd ./back/ && npm install && node server.js && cd ../front/ && npm install && npm start",
     "heroku-postbuild": "cd ./front/ && npm install && npm run build",
     "backend": "cd ./back/ && nodemon server.js ",
     "frontend": "cd ./front/ && npm run start",
