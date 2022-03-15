@@ -2,7 +2,7 @@
   "name": "ff_motorsports",
   "version": "1.0.0",
   "description": "here goes nothing",
-  "main": "index.js",
+  "main": "./front/index.js",
   "scripts": {
     "start": "cd ./back/ && npm install && node server.js",
     "heroku-postbuild": "cd ./front/ && npm install && npm run build",
