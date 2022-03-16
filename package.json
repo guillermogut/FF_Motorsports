@@ -15,7 +15,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "npm i && react-scripts start && ./back npm i && npm dev",
+    "start": "npm i && react-scripts start && cd ./back/ npm i && npm dev",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
