@@ -12,6 +12,13 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+
+const publicPath = path.join(__dirname, '..', 'build');
+
+app.use(express.static(publicPath));
+
+
+
 app.listen(process.env.PORT || 5000, () => {
   console.log(`Server listening on ${PORT}`);
 });
@@ -164,3 +171,35 @@ app.post('/order-add', (req, res) => {
             console.log(res);
     })
 })
+
+
+
+
+
+app.get('/', (req, res) => {
+    
+   //  pool.query('select * from test.orders', (req, result) => {
+        
+   //      res.send(result.rows);
+
+
+   //  })
+     
+   res.send({thing: "the thing is still here"})
+    
+})
+
+
+//-------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+app.get('*', (req, res) => {
+
+   res.sendFile(path.join(publicPath, 'index.html'));
+});
