@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
     
     //res.send({message: "reeeee"})
     console.log('omg reee')
-    console.log(path)
+    console.log(path.dirname)
     res.sendFile(path.join('index.html'))
 })
 
