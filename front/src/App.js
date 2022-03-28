@@ -19,7 +19,7 @@ function App() {
 
 
   const callBackendAPI = async () => {
-    const response = await fetch('http://https://ff-motorsports.herokuapp.com/');
+    const response = await fetch('http://localhost:5000');
     //console.log(response.json());
     const body = await response.json();
 
