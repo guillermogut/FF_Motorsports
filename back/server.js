@@ -4,7 +4,7 @@ const dotenv = require('dotenv')
 const cors = require('cors');
 const axios = require('axios')
 const bodyParser = require('body-parser');
-
+const path = require('path');
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 const PORT = 5000;
 
@@ -13,27 +13,22 @@ app.use(cors());
 app.use(bodyParser.json());
 
 
-const publicPath = path.join(__dirname, '..', 'build');
-
-app.use(express.static(publicPath));
-
+const publicPath = path.join(__dirname,  'build');
 
 
 app.listen(process.env.PORT || 5000, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
+app.use(express.static(path.join(__dirname, 'build')))
+
 app.get('/', (req, res) => {
     
-    pool.query('select * from test.orders', (req, result) => {
-        
-        res.send(result.rows);
-
-
-    })
-    
-    
+    res.send({message: "reeeee"})
+    //res.sendFile(path.join(__dirname,'build','index.html'))
 })
+
+
 // app.get('/ree', (req, result) => {
 
 //     console.log("in ree");
