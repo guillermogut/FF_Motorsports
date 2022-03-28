@@ -31,19 +31,19 @@ app.get('/', (req, res) => {
 })
 
 
-// app.get('/ree', (req, result) => {
+app.get('/ree', (req, result) => {
 
-//     console.log("in ree");
-//     pool.query('alter table test.orders add column orderid serial primary key',
-//         (req, res) => {
-//         //console.log(res.status);
-//             })
-//             .catch(error => {
-//             //console.error(error);
-//         })
+    // console.log("in ree");
+    // pool.query('alter table test.orders add column orderid serial primary key',
+    //     (req, res) => {
+    //     //console.log(res.status);
+    //         })
+    //         .catch(error => {
+    //         //console.error(error);
+    //     })
     
-    
-// })
+    result.send({message:"init to win it"})
+})
 // app.post('/', (req, res) => {
 //     const query = 'insert into test.customers( first_name,last_name,email) VALUES($1, $2, $3)'
 //     const query2 = 'INSERT INTO test.orders (customerid, date, description,make,model,plate,vin,year) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)'
