@@ -22,7 +22,7 @@ const Order_Add = () => {
         e.preventDefault();
 
         axios
-            .post('http://localhost:5000/order-add');
+            .post('https://ff-motorsports.herokuapp.com/order-add');
 
     }
     

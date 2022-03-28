@@ -19,7 +19,7 @@ const Customer_Add = () => {
         e.preventDefault();
 
         axios
-            .post('http://localhost:5000/customer-add');
+            .post('https://ff-motorsports.herokuapp.com/customer-add');
 
     }
     
@@ -29,7 +29,7 @@ const Customer_Add = () => {
         if (customer.first && customer.last && customer.email && customer.phone){
             
             axios
-            .post('http://localhost:5000/customer-add', customer)
+            .post('https://ff-motorsports.herokuapp.com/customer-add', customer)
             .then(res => {
                 console.log(`status code: ${res.status}`);
                 console.log(res);

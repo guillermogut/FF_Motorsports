@@ -19,7 +19,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "copy": "copyfiles --error ./build/* ../back/ "
+    "copy": "copyfiles -a ./build/*  ../back/ "
   },
   "eslintConfig": {
     "extends": [
