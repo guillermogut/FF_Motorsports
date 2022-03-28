@@ -24,8 +24,8 @@ app.use(express.static(path.join(__dirname, 'build')))
 
 app.get('/', (req, res) => {
     
-    res.send({message: "reeeee"})
-    //res.sendFile(path.join(__dirname,'build','index.html'))
+    //res.send({message: "reeeee"})
+    res.sendFile(path.join(__dirname,'build','index.html'))
 })
 
 
