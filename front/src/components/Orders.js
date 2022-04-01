@@ -18,7 +18,7 @@ const Orders = () => {
     if (info.orderId) {
       console.log("order id")
       console.log(info)
-      axios.post('https://ff-motorsports.herokuapp.com/orders', info )
+      axios.post('http://localhost:5000/orders', info )
             .then(res => {
               console.log(`status code: ${res.status}`);
               
@@ -29,7 +29,7 @@ const Orders = () => {
                 
               console.log(orders)
               
-              return axios.post('https://ff-motorsports.herokuapp.com/customer-get', ree[0]);
+              return axios.post('http://localhost:5000/customer-get', ree[0]);
             })
         .then(res => {
               console.log(`status code: ${res.status}`);

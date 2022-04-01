@@ -21,7 +21,7 @@ const Customer_Get = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         axios
-            .post('http://https://ff-motorsports.herokuapp.com/', customer)
+            .post('http://https://ff-motorsports.herokuapp.com/customer-get', customer)
             .then(res => {
                 console.log(`status code: ${res.status}`);
                 console.log(res.data);

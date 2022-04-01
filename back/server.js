@@ -3,6 +3,8 @@ const express = require("express");
 const dotenv = require('dotenv')
 const cors = require('cors');
 const axios = require('axios')
+const basicAuth = require('express-basic-auth')
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require('path');
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
@@ -11,20 +13,61 @@ const PORT = 5000;
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+app.use(cookieParser('82e4e438a0705fabf61f9854e3b575af'));
+const auth = basicAuth({
+  users: {
+    BigBoss1964: 'MamaeAmaU3',
+    user: '456',
+  },
+});
 
 
 app.listen(process.env.PORT || 5000, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
-app.use(express.static(path.join(__dirname, 'build')))
+//app.use(express.static(path.join(__dirname, 'build')))
+
+// uncomment above and add 'auth' below to args
+
+app.get('/authenticate',auth,(req, res) => {
+    //console.log("awesome sauce")
+
+    const options = {
+    httpOnly: true,
+    signed: true,
+    };
+
+    if (req.auth.user === 'BigBoss1964') {
+    res.cookie('name', 'admin', options).send({ user: 'Alda' });
+  } else if (req.auth.user === 'user') {
+    res.cookie('name', 'user', options).send({ user: 'user' });
+  }
+});
+
+app.get('/read-cookie', (req, res) => {
+  if (req.signedCookies.name === 'admin') {
+    res.send({ user: 'Alda' });
+  } else if (req.signedCookies.name === 'user') {
+    res.send({ user: 'user' });
+  } else {
+    res.send({ user: 'auth' });
+  }
+});
+
+app.get('/clear-cookie', (req, res) => {
+  
+  res.clearCookie('name').end();
+});
+
+
 
 app.get('/', (req, res) => {
     
     //res.send({message: "reeeee"})
     console.log('omg reee')
-    console.log(__dirname)
-    res.sendFile(path.join('index.html'))
+    //console.log(__dirname)
+    //res.sendFile(path.join('index.html'))
 })
 
 
@@ -69,6 +112,12 @@ app.get('/ree', (req, result) => {
 // })
 
 app.post('/customer-add', (req, res) => {
+
+  if (req.signedCookies.name !== 'admin') {
+    res.send({ message: "nope" })
+    console.log("nope")
+    return
+  }
     console.log(req.body);
    //insert into test.customers( first_name,last_name,email) VALUES($1, $2, $3)
     const { first, last, email,phone } = req.body;
@@ -82,7 +131,12 @@ app.post('/customer-add', (req, res) => {
 })
 
 app.post('/customer-get', (req, res) => {
-    
+  if (req.signedCookies.name !== 'admin') {
+    res.send({ message: "nope" })
+    console.log("nope")
+    return
+  }  
+
     console.log(" received from customer get");
     //console.log(req.first);
     const { first_name, last_name, email, customerid,id} = req.body;
@@ -116,11 +170,19 @@ app.post('/customer-get', (req, res) => {
 })
 
 app.post('/orders', (req, res) => {
+
+
+  if (req.signedCookies.name !== 'admin') {
+    res.send({ message: "nope" })
+    console.log("nope")
+    return
+  }
     console.log("IN THE ORDERS")
     
     const { first_name, last_name, email,id, orderId } = req.body;
     console.log(req.body)
-    console.log(orderId)
+  console.log(orderId)
+    
     let query =''
     let values = [];
     if (orderId) {
@@ -149,6 +211,12 @@ app.post('/orders', (req, res) => {
 })
 
 app.post('/order-add', (req, res) => {
+
+  if (req.signedCookies.name !== 'admin') {
+    res.send({ message: "nope" })
+    console.log("nope")
+    return
+  }
     console.log("IN THE ADD ORDERS")
     
     const {make, model, year, vin, plate, mileage,description,id} = req.body;
@@ -187,13 +255,8 @@ app.get('/', (req, res) => {
 //-------------------------------------------------------------------------------------
 
 
-
-
-
-
-
-
 app.get('*', (req, res) => {
-
-   res.sendFile(path.join(publicPath, 'index.html'));
+    console.log("omg")
+    //res.sendFile(path.join('index.html'))
+   //res.sendFile(path.join(publicPath, 'index.html'));
 });

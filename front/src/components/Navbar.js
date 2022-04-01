@@ -1,30 +1,61 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css'
-const Navbar = () => {
+import { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
+
+const Navbar = (props) => {
+  
+  const nav = useHistory();
+
+  // //console.log(user)
+  // useEffect(() => {
+  //   //readCookie();
+  // }, [])
+  const reset = () => {
+    //props.handleChangeUser('')
+    props.clearCookie();
+    props.toggleNavBar();
+    nav.push('/')
+    
+    // //readCookie();
+  }
+  useEffect(() => {
+    //console.log('props.user changed')
+    //console.log(props.user)
+  },[props.navBar])
   return (
     <nav>
      
       <div className='navbar'>
         <div>
           <Link to='/'>Home</Link>
+          
         </div>
         <div>
-          <Link to='/login'>Login</Link>
-        </div>
-        
-        <div>
-          <Link to='/customer-get'>Get Customer</Link>
+           <Link to = '/login' onClick = {() =>reset()}> LogOut</Link>
+          
         </div>
         
         <div>
-          <Link to='/customer-add'>Add Customer</Link>
+          <Link to='/customer-get'>Get Cust</Link>
+          
+        </div>
+        
+        <div>
+          <Link to='/customer-add'>Add Cust</Link>
+          
         </div>
         <div>
-          <Link to='/orders'> Temp orders</Link>
+          <Link to='/orders'> T orders</Link>
+          
         </div>
         <div>
-          <Link to='/order-add'> Temp add orders</Link>
+          <Link to='/order-add'> T add orders</Link>
+          
+        </div>
+        <div>
+          
         </div>
       </div>
          

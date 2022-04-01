@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from 'react'
-
+import { useHistory } from 'react-router-dom'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
@@ -16,8 +16,15 @@ const axios = require('axios')
 function App() {
 
   const [thing, setThing] = useState({});
+  const [user, setUser] = useState('');
+  const [navBar,setNavBar] = useState(false)
+  const handleChangeUser = (userObj) => {
 
-
+    const name = userObj
+    console.log("in change user")
+    setUser(name);
+  }
+  const nav = useHistory();
   const callBackendAPI = async () => {
     const response = await fetch('http://localhost:5000');
     //console.log(response.json());
@@ -28,43 +35,72 @@ function App() {
     }
     return body;
   };
-  useEffect(() => {
+
+const clearCookie = async () => {
+  try {
+    const res = await axios.get('/clear-cookie');
+    
+  } catch (e) {
+    console.log(e);
+  }
+  };
+  const toggleNavBar = () => {
+    setNavBar(!navBar)
+  }
+const readCookie = async () => {
+  try {
+    const res = await axios.get('/read-cookie');
+
+    //handleChangeUser(res.data.user);
+    if (res.data.user === 'Alda') {
+      const user = res.data.user;
+      handleChangeUser(res.data.user);
+      
+    }
+    else {
+      console.log('cookie not read');
+      handleChangeUser('')
+      
+      
+    }
+  } catch (e) {
+    console.log(e);
+  }
+    };
+
   
-    //callBackendAPI().then(res => console.log(res))
+  useEffect(() => {
+  console.log('after mount')
+  
+  }, [user,navBar])
 
-    // axios.post('http://localhost:5000')
-    //   .then(res => {
-    //     console.log(res.status)
-
-    //   })
-    //   .catch(error => {
-    //   console.error(error)
-    // })
-
-
-},[])
-
+  useEffect(() => {
+    console.log('after mount first time')
+    console.log(user)
+  readCookie();
+  }, [])
+  
   return (
     <Router>
-      <Navbar ></Navbar>
+      {navBar? <Navbar user={user} clearCookie= {clearCookie} handleChangeUser ={handleChangeUser} toggleNavBar = {toggleNavBar} ></Navbar>:<></>}
       <Switch>
-        <Route exact path='/'>
-          <Home></Home>
+        <Route  exact path='/'>
+          <Home user={user} ></Home>
         </Route>
-        <Route path = '/login'>
-          <Login ></Login>
+        <Route path = '/login' >
+          <Login user={user} handleChangeUser={handleChangeUser} toggleNavBar = {toggleNavBar}></Login>
         </Route>
         <Route path = '/customer-get'>
-          <Customer_Get ></Customer_Get>
+          <Customer_Get user={user} ></Customer_Get>
         </Route>
         <Route path ='/customer-add'>
-          <Customer_Add ></Customer_Add>
+          <Customer_Add user={user} ></Customer_Add>
         </Route>
         <Route path ='/orders'>
-          <Orders></Orders>
+          <Orders user={user} ></Orders>
         </Route>
         <Route path ='/order-add'>
-          <Order_Add></Order_Add>
+          <Order_Add user={user} ></Order_Add>
         </Route>
         <Route path='*'>
           <Error />

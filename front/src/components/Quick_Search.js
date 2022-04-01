@@ -2,8 +2,6 @@ import { useState, useEffect, useReducer } from 'react'
 import { useHistory } from 'react-router-dom'
 
 
-
-
 const Quick_Search = () => {
     
     const [orderId, setOrderId] = useState('');
