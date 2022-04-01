@@ -20,6 +20,7 @@ function App() {
   const [navBar,setNavBar] = useState(false)
   const handleChangeUser = (userObj) => {
 
+    
     const name = userObj
     console.log("in change user")
     setUser(name);
@@ -55,6 +56,7 @@ const readCookie = async () => {
     if (res.data.user === 'Alda') {
       const user = res.data.user;
       handleChangeUser(res.data.user);
+      setNavBar(true);
       
     }
     else {
@@ -75,6 +77,8 @@ const readCookie = async () => {
   }, [user,navBar])
 
   useEffect(() => {
+    let base_url = window.location.origin;
+    console.log(base_url)
     console.log('after mount first time')
     console.log(user)
   readCookie();

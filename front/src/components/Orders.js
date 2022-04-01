@@ -10,7 +10,7 @@ const Orders = () => {
     
   const [orders, setOrders] = useState([]);
   const [customer, setCustomer] = useState({});
-  
+  let base_url = window.location.origin;
   const callBackendAPI = async () => {
       
 
@@ -18,7 +18,8 @@ const Orders = () => {
     if (info.orderId) {
       console.log("order id")
       console.log(info)
-      axios.post('http://localhost:5000/orders', info )
+      let base_url = window.location.origin;
+      axios.post(base_url+'/orders', info )
             .then(res => {
               console.log(`status code: ${res.status}`);
               
@@ -29,7 +30,7 @@ const Orders = () => {
                 
               console.log(orders)
               
-              return axios.post('http://localhost:5000/customer-get', ree[0]);
+              return axios.post(base_url+'/customer-get', ree[0]);
             })
         .then(res => {
               console.log(`status code: ${res.status}`);
@@ -53,7 +54,7 @@ const Orders = () => {
     else if (info.id) {
       setCustomer(info);
       axios
-            .post('http://localhost:5000/orders', customer )
+            .post(base_url+'/orders', customer )
             .then(res => {
                 console.log(`status code: ${res.status}`);
                 

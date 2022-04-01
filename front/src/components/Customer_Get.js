@@ -16,12 +16,12 @@ const Customer_Get = () => {
     
     let [customers, setCustomers] = useState([])
     const [customer, setCustomer] = useState(defaultCustomer)
-
+    let base_url = window.location.origin;
     //console.log(customer.first);
     const handleSubmit = (e) => {
         e.preventDefault();
         axios
-            .post('http://https://ff-motorsports.herokuapp.com/customer-get', customer)
+            .post(base_url+'/customer-get', customer)
             .then(res => {
                 console.log(`status code: ${res.status}`);
                 console.log(res.data);

@@ -6,7 +6,7 @@ const axios = require('axios')
 const Customer_Add = () => {
     
     const [customer, setCustomer] = useState({first:'',last:'',email:'',phone:''});
-
+    let base_url = window.location.origin;
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -19,7 +19,7 @@ const Customer_Add = () => {
         e.preventDefault();
 
         axios
-            .post('https://ff-motorsports.herokuapp.com/customer-add');
+            .post(base_url+'/customer-add');
 
     }
     
@@ -29,7 +29,7 @@ const Customer_Add = () => {
         if (customer.first && customer.last && customer.email && customer.phone){
             
             axios
-            .post('https://ff-motorsports.herokuapp.com/customer-add', customer)
+            .post(base_url+'/customer-add', customer)
             .then(res => {
                 console.log(`status code: ${res.status}`);
                 console.log(res);

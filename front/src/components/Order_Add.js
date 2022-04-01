@@ -9,7 +9,7 @@ const axios = require('axios')
 const Order_Add = () => {
     const customer = useLocation().state;
     const [order, setOrder] = useState({ make: '', model: '', year: '', vin: '', plate: '', mileage:'',description:'',id:''})
-
+    let base_url = window.location.origin;
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -22,7 +22,7 @@ const Order_Add = () => {
         e.preventDefault();
 
         axios
-            .post('https://ff-motorsports.herokuapp.com/order-add');
+            .post(base_url+'/order-add');
 
     }
     
@@ -35,7 +35,7 @@ const Order_Add = () => {
         if (true){//validate fields here with checkFields()
             
             axios
-            .post('http://localhost:5000/order-add', {...order, id: customer.id})
+            .post(base_url+'/order-add', {...order, id: customer.id})
             .then(res => {
                 console.log(`status code: ${res.status}`);
                 console.log(res);
