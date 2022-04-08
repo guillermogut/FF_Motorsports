@@ -9,13 +9,15 @@ const defaultCustomer = {
     first_name: '',
     last_name: '',
     email: '',
-    phone:''
+    phone: '',
+    id:''
 
 }
 const Customer_Get = () => {
     
     let [customers, setCustomers] = useState([])
     const [customer, setCustomer] = useState(defaultCustomer)
+    //const [searchOption, setSearchOption] = useState([false,false,false,true])
     let base_url = window.location.origin;
     //console.log(customer.first);
     const handleSubmit = (e) => {
@@ -80,6 +82,11 @@ const Customer_Get = () => {
                     name='phone'
                     value={customer.phone}
                     onChange={handleChange}></input>
+                <label>id</label>
+                <input type="text"
+                    name='id'
+                    value={customer.id}
+                    onChange={handleChange}></input>
                 <button type="submit" onClick={(e) => handleSubmit(e)}>Submit</button>
                 <button type='button' onClick={handleClear}>Clear</button>
                 
@@ -93,12 +100,17 @@ const Customer_Get = () => {
                     const last = person.last_name;
                     const email = person.email;
                     const phone = person.phone;
+                    const address = person.address;
+                    const id = person.id;
+
                     
 
                     return (
                         
                         <div className="listItem" key={i}>
-                            <label>Name: </label><p>{first + " " + last}</p> <label>Email: </label><p> {email}</p> <label>Phone: </label><p> {phone}</p>
+                            <div><p>{first + " " + last}</p> <p> {email}</p><p>id# {id }</p></div>
+                            <div> <p> {phone}</p></div>
+                            <div > <p>{address[0] + " " + address[1]}{address[2] != " " ? `Apt ` + address[2] : ` `}</p><p>{address[3]+', '+address[4]+" "+address[5] }</p></div>
                             <div className = "customerOrderLinks">
                                 <Link className='linkOrder' to={{ pathname: '/orders', state: { ...person } }}>Go to Orders</Link>
                                 <Link className='linkOrder' to={{ pathname:'/order-add', state:{...person} } }>Add Order</Link>

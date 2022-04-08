@@ -47,14 +47,6 @@ const Navbar = (props) => {
           
         </div>
         <div>
-          <Link to='/orders'> T orders</Link>
-          
-        </div>
-        <div>
-          <Link to='/order-add'> T add orders</Link>
-          
-        </div>
-        <div>
           
         </div>
       </div>

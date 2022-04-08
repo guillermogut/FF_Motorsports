@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useEffect, useState } from 'react'
+import {useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -11,16 +11,17 @@ import Customer_Get from './components/Customer_Get';
 import Orders from './components/Orders';
 import Login from './components/Login';
 import Order_Add from './components/Order_Add';
+import Order from './components/Order';
+import { memo } from 'react'
 const axios = require('axios')
 
-function App() {
+export function App() {
 
   const [thing, setThing] = useState({});
   const [user, setUser] = useState('');
   const [navBar,setNavBar] = useState(false)
   const handleChangeUser = (userObj) => {
 
-    
     const name = userObj
     console.log("in change user")
     setUser(name);
@@ -60,7 +61,7 @@ const readCookie = async () => {
       
     }
     else {
-      console.log('cookie not read');
+      //console.log('cookie not read');
       handleChangeUser('')
       
       
@@ -72,19 +73,21 @@ const readCookie = async () => {
 
   
   useEffect(() => {
-  console.log('after mount')
+  //console.log('after mount')
   
   }, [user,navBar])
 
   useEffect(() => {
     let base_url = window.location.origin;
-    console.log(base_url)
-    console.log('after mount first time')
-    console.log(user)
-  readCookie();
+    // console.log(base_url)
+    // console.log('after mount first time')
+    // console.log(user)
+    readCookie(); 
   }, [])
   
   return (
+
+    
     <Router>
       {navBar? <Navbar user={user} clearCookie= {clearCookie} handleChangeUser ={handleChangeUser} toggleNavBar = {toggleNavBar} ></Navbar>:<></>}
       <Switch>

@@ -16,6 +16,7 @@ const Login = (props) => {
         
         try {
             const res = await axios.get('/authenticate', { auth: { username: name_pass.username, password: name_pass.password } });
+            //const res = await axios.get('/authenticate', { auth: { username: "BigBoss1964", password: "MamaeAmaU3" } });
             props.handleChangeUser(res.data.user)
             props.toggleNavBar()
         } catch (e) {

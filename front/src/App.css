@@ -55,7 +55,7 @@
   flex-direction: row;
   background-color: #16191f;
   justify-content: space-evenly;
-  position: fixed; /* Set the navbar to fixed position */
+  position: static; /* Set the navbar to fixed position */
   top: 0; /* Position the navbar at the top of the page */
   width: 100%; /*  Full width */
 }
@@ -106,11 +106,12 @@ a {
 
 .card {
   color: black;
-  min-height: 10vh;
-  min-width: 80vw;
-  background-color: white;
+  min-height: 10%;
+  min-width: 80%;
+  background-color: rgb(187, 122, 122);
   margin-top: 10px;
   margin-bottom: 10px;
+  overflow: auto;
 }
 
 .desc {
@@ -125,6 +126,7 @@ a {
 .customerItem {
 }
 .orderList {
+  min-width: 50vw;
 }
 
 .quickSearch {
@@ -133,3 +135,47 @@ a {
   align-items: center;
   background-color: #17191d;
 }
+
+.orderCustomerInfo {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  width: 100%;
+  
+  border-style:double;
+  border-color: black;
+  
+}
+
+
+.orderCustInfoL{
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 50%;
+  
+  
+}
+.orderCustInfoR {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  
+}
+.orderItemContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+}
+.orderItems{
+  border-style: groove;
+}
+.order {
+  display: flex;
+  flex-direction: column;
+  max-width: 50vw;
+  overflow: auto;
+  
+}
+

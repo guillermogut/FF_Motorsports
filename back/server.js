@@ -120,10 +120,10 @@ app.post('/customer-add', (req, res) => {
   }
     console.log(req.body);
    //insert into test.customers( first_name,last_name,email) VALUES($1, $2, $3)
-    const { first, last, email,phone } = req.body;
-    console.log(first);
-    pool.query('insert into test.customers( first_name,last_name,email,phone) VALUES($1, $2, $3,$4)',
-        [first, last, email,phone])
+    const { first, last, email,phone,address } = req.body;
+    //console.log(first);
+    pool.query('insert into test.customers( first_name,last_name,email,phone,address) VALUES($1, $2, $3,$4,$5)',
+        [first, last, email,phone,address])
         .catch(error => {
             console.error(error);
             console.log(res);
@@ -140,7 +140,7 @@ app.post('/customer-get', (req, res) => {
     console.log(" received from customer get");
     //console.log(req.first);
     const { first_name, last_name, email, customerid,id} = req.body;
-    console.log(customerid)
+    console.log(id)
     const test = 'select * from test.customers';
     //'select * from test.customers where first_name = $1 AND last_name $2 AND email = $3'
     let query = 'select * from test.customers where first_name = $1';
@@ -150,6 +150,13 @@ app.post('/customer-get', (req, res) => {
 
         query = 'select * from test.customers where id = $1';
         values = [customerid];
+    }
+  else if (id)
+    {
+    console.log('getting customer by id')
+
+        query = 'select * from test.customers where id = $1';
+        values = [id];
     }
     else {
         console.log('getting customer by first name')
@@ -181,7 +188,7 @@ app.post('/orders', (req, res) => {
     
     const { first_name, last_name, email,id, orderId } = req.body;
     console.log(req.body)
-  console.log(orderId)
+    console.log(id)
     
     let query =''
     let values = [];
@@ -192,7 +199,8 @@ app.post('/orders', (req, res) => {
         pool.query(query,
         values,
         (req, result) => {
-            console.log(result.rows);
+            //console.log(result.rows);
+          
             res.send(result.rows);
         })
     }
@@ -201,8 +209,9 @@ app.post('/orders', (req, res) => {
         values = [id];
         pool.query(query,
         values,
-        (req, result) => {
-            console.log(result.rows);
+          (req, result) => {
+          console.log('look at the results below REEEEEEEE')
+            //console.log(result.rows);
             res.send(result.rows);
         })
     }
@@ -218,19 +227,20 @@ app.post('/order-add', (req, res) => {
     return
   }
     console.log("IN THE ADD ORDERS")
-    
-    const {make, model, year, vin, plate, mileage,description,id} = req.body;
-    console.log(id)
-    const test = 'select * from test.orders';
+    //console.log(req.body)
+    const {make, model, year, vin, plate, mileage, engine,id} = req.body;
+  //console.log(id)
+  const customerid = id;
+    //const test = 'select * from test.orders';
     //'select * from test.customers where first_name = $1 AND last_name $2 AND email = $3'
-    const query = 'select * from test.orders where first_name = $1';
-    const values = [make, model, year, vin, plate, description, id];
-
-   pool.query('insert into test.orders(make,model,year,vin,plate,description,customerid) VALUES($1, $2, $3, $4, $5, $6,$7)',
+    //const query = 'select * from test.orders where first_name = $1';
+    const values = [make, model,mileage,parseInt(year) , vin, plate, customerid,engine];
+  console.log(values)
+   pool.query('insert into test.orders(make,model,mileage,year,vin,plate,customerid,engine,date) VALUES($1, $2, $3, $4, $5, $6,$7,$8,NOW())',
         values)
         .catch(error => {
             console.error(error);
-            console.log(res);
+            console.log(res.body);
     })
 })
 

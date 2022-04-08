@@ -8,7 +8,7 @@ const axios = require('axios')
 
 const Order_Add = () => {
     const customer = useLocation().state;
-    const [order, setOrder] = useState({ make: '', model: '', year: '', vin: '', plate: '', mileage:'',description:'',id:''})
+    const [order, setOrder] = useState({ make: '', model: '', year: '', vin: '', plate: '', mileage:'',id:'',engine:''})
     let base_url = window.location.origin;
     const handleChange = (e) => {
         const name = e.target.name;
@@ -47,7 +47,7 @@ const Order_Add = () => {
         }
         
         
-        setOrder({ make: '', model: '', year: '', vin: '', plate: '', mileage:'',description:'',id:''});
+        setOrder({ make: '', model: '', year: '', vin: '', plate: '', mileage:'',id:'',engine:''});
     }
 
     const checkFields = (order) => {
@@ -113,10 +113,10 @@ const Order_Add = () => {
                     value={order.plate}
                     onChange={handleChange}>
                 </input>
-                <label>Description</label>
+                <label>Engine</label>
                 <input type="text"
-                    name='description'
-                    value={order.description}
+                    name='engine'
+                    value={order.engine}
                     onChange={handleChange}>
                 </input>
                 <button type="submit" onClick ={(e) =>handleBtn(e)}>Submit</button>

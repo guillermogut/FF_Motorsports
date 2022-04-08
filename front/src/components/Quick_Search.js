@@ -17,7 +17,7 @@ const Quick_Search = () => {
         console.log("in the quick search")
         let path = '/orders';
 
-        console.log(e.target.value)
+        console.log(orderId)
         nav.push(path, {orderId: parseInt(orderId)} );
 
     }
