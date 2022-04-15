@@ -1,4 +1,4 @@
-import { useEffect, useState, useReducer} from 'react'
+import { useEffect, useState} from 'react'
 import '../App.css';
 import { Link } from 'react-router-dom';
 const axios = require('axios')
@@ -110,7 +110,7 @@ const Customer_Get = () => {
                         <div className="listItem" key={i}>
                             <div><p>{first + " " + last}</p> <p> {email}</p><p>id# {id }</p></div>
                             <div> <p> {phone}</p></div>
-                            <div > <p>{address[0] + " " + address[1]}{address[2] != " " ? `Apt ` + address[2] : ` `}</p><p>{address[3]+', '+address[4]+" "+address[5] }</p></div>
+                            <div > <p>{address[0] + " " + address[1]}{address[2] !== " " ? `Apt ` + address[2] : ` `}</p><p>{address[3]+', '+address[4]+" "+address[5] }</p></div>
                             <div className = "customerOrderLinks">
                                 <Link className='linkOrder' to={{ pathname: '/orders', state: { ...person } }}>Go to Orders</Link>
                                 <Link className='linkOrder' to={{ pathname:'/order-add', state:{...person} } }>Add Order</Link>

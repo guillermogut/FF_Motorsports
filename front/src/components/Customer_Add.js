@@ -1,6 +1,5 @@
-import { useEffect, useState, useReducer} from 'react'
+import { useEffect, useState} from 'react'
 import '../App.css';
-import Navbar from './Navbar';
 const axios = require('axios')
 
 const Customer_Add = () => {
@@ -24,13 +23,6 @@ const Customer_Add = () => {
 
     }
 
-    const wtf = (e) => {
-        e.preventDefault();
-
-        axios
-            .post(base_url+'/customer-add');
-
-    }
     
     const handleBtn = (e) => {
         e.preventDefault();

@@ -1,8 +1,7 @@
-import Error from './Error';
-import { useEffect, useState, useReducer } from 'react'
-import { Link, useLocation } from 'react-router-dom';
+
+import { useEffect, useState} from 'react'
+import {useLocation } from 'react-router-dom';
 import '../App.css';
-import Navbar from './Navbar';
 const axios = require('axios')
 
 
@@ -18,13 +17,7 @@ const Order_Add = () => {
 
     }
 
-    const wtf = (e) => {
-        e.preventDefault();
-
-        axios
-            .post(base_url+'/order-add');
-
-    }
+    
     
     const handleBtn = (e) => {
         e.preventDefault();
@@ -50,21 +43,7 @@ const Order_Add = () => {
         setOrder({ make: '', model: '', year: '', vin: '', plate: '', mileage:'',id:'',engine:''});
     }
 
-    const checkFields = (order) => {
-        
-        // let notEmpty = true;
-
-        // customer.foreach((field) => {
-        //     if (field) {
-        //         notEmpty = true;
-        //     }
-        //     else {
-        //         notEmpty = false;
-        //     }
-        // })
-
-        // return notEmpty
-    }
+    
     useEffect(() => {
         //console.log(customer)
     },[])

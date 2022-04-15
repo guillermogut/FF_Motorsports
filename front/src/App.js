@@ -1,7 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
 import {useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
@@ -11,13 +9,11 @@ import Customer_Get from './components/Customer_Get';
 import Orders from './components/Orders';
 import Login from './components/Login';
 import Order_Add from './components/Order_Add';
-import Order from './components/Order';
-import { memo } from 'react'
+
 const axios = require('axios')
 
 export function App() {
 
-  const [thing, setThing] = useState({});
   const [user, setUser] = useState('');
   const [navBar,setNavBar] = useState(false)
   const handleChangeUser = (userObj) => {
@@ -26,21 +22,10 @@ export function App() {
     console.log("in change user")
     setUser(name);
   }
-  const nav = useHistory();
-  const callBackendAPI = async () => {
-    const response = await fetch('http://localhost:5000');
-    //console.log(response.json());
-    const body = await response.json();
-
-    if (response.status !== 200) {
-      throw Error(body.message) 
-    }
-    return body;
-  };
-
+  
 const clearCookie = async () => {
   try {
-    const res = await axios.get('/clear-cookie');
+    axios.get('/clear-cookie');
     
   } catch (e) {
     console.log(e);
@@ -55,7 +40,6 @@ const readCookie = async () => {
 
     //handleChangeUser(res.data.user);
     if (res.data.user === 'Alda') {
-      const user = res.data.user;
       handleChangeUser(res.data.user);
       setNavBar(true);
       
@@ -78,10 +62,7 @@ const readCookie = async () => {
   }, [user,navBar])
 
   useEffect(() => {
-    let base_url = window.location.origin;
-    // console.log(base_url)
-    // console.log('after mount first time')
-    // console.log(user)
+    
     readCookie(); 
   }, [])
   

@@ -1,4 +1,4 @@
-import { useEffect, useState, useReducer } from 'react'
+import { useEffect, useState} from 'react'
 import '../App.css';
 import { useHistory } from 'react-router-dom'
 const axios = require('axios')
@@ -11,12 +11,11 @@ const Login = (props) => {
     
     const [name_pass, setName_pass] = useState(defaultUserPass);
     const nav = useHistory();
-    let result = null;
     const auth = async () => {
         
         try {
             const res = await axios.get('/authenticate', { auth: { username: name_pass.username, password: name_pass.password } });
-            //const res = await axios.get('/authenticate', { auth: { username: "BigBoss1964", password: "MamaeAmaU3" } });
+            
             props.handleChangeUser(res.data.user)
             props.toggleNavBar()
         } catch (e) {

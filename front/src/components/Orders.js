@@ -10,9 +10,7 @@ const Orders = () => {
   
   const [orders, setOrders] = useState([]);
   const [customer, setCustomer] = useState({});
-  const [cust_orders, setCust_orders] = useState({ orders: {}
-    , customer: {}
-})
+  
   let base_url = window.location.origin;
 
   let customerTemp = null;
@@ -88,15 +86,22 @@ const Orders = () => {
   return (
     
     <div className='formDiv'>
-     
+     <p>ORDERS FOR:</p>
       <div className='orderCustInfoL'>
-          <p>ORDERS FOR:</p>
+          
+        <div className='colContainer'>
+
           <p style={{ fontSize: '30px' }}><b>{customer.first_name + " " + customer.last_name}</b></p>
           <p style={{ fontSize: '20px' }}>Mobile: {customer.phone}</p>
           <p style={{ fontSize: '20px' }}>{customer.email}</p>
+        </div>
           
+        <div className='colContainer'>
           { customer.address? <p style={{ fontSize: '20px' }}>{customer.address[0] + ' ' + customer.address[1]}{customer.address[2] ? customer.address[2] : ' '}</p>: <></> }
           { customer.address? <p style={{ fontSize: '20px' }}>{customer.address[3] + ", " + customer.address[4] + " " + customer.address[5]}</p>: <></>}
+
+        </div>
+          
         </div>
           <div className = "orderList">
         {
@@ -106,7 +111,7 @@ const Orders = () => {
                 return (
                   
                   <Order parentToChild={order} customer={customer} key={i}></Order>
-                  //<div key = {i}>{order.orderid}{"  " +customer.first_name}</div>
+                  
                   )
                 })
             }

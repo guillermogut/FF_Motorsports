@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react'
+import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 
@@ -8,7 +8,7 @@ const Quick_Search = () => {
     const nav = useHistory();
 
     const handleChange = (e) => {
-        const name = e.target.name;
+        
         const value = e.target.value;
         setOrderId(value)
     }

@@ -45,6 +45,103 @@ app.get('/authenticate',auth,(req, res) => {
   }
 });
 
+app.post('/get-notes', (req, result) => {
+  
+
+  if (req.signedCookies.name !== 'admin') {
+    res.send({ message: "nope" })
+    console.log("nope")
+    return
+  }
+
+
+  let date = new Date();
+  console.log(' g rendered at '+ date.toLocaleTimeString('en-US'))
+
+  const {orderid} = req.body;///////////////////////////////////////////////////////////////////////
+   
+    pool.query('select * from test.notes where orderid = $1',
+      [orderid], (req, res) => {
+        console.log('------------------------get notes n stuff--------------------------')
+       
+        console.log(res.rows)
+        result.send(res.rows)
+        return;
+        })
+        
+   
+})
+
+app.post('/make-note', (req, result) => {
+  
+  if (req.signedCookies.name !== 'admin') {
+    res.send({ message: "nope" })
+    console.log("nope")
+    return
+  }
+  console.log('beep boop, note made')
+  const {note_type,note,orderid} = req.body;///////////////////////////////////////////////////////////////////////
+  console.log(note)
+  console.log(note_type)
+  console.log(orderid)
+    pool.query('insert into test.notes(note,note_type,orderid,date) values($1,$2,$3,NOW())',
+      [note,note_type,orderid], (req, res) => {
+        console.log('------------------------ make notes n stuff--------------------------')
+        //console.log(res.rows)
+        //result.send(res.rows)
+        return;
+        })
+        
+   
+})
+
+app.post('/del-note', (req, result) => {
+  
+  if (req.signedCookies.name !== 'admin') {
+    res.send({ message: "nope" })
+    console.log("nope")
+    return
+  }
+  console.log('beep boop, note deleted')
+  let date = new Date();
+  console.log('rendered at '+ date.toLocaleTimeString('en-US'))
+  const {id} = req.body;///////////////////////////////////////////////////////////////////////
+   
+    pool.query('delete from test.notes where id = $1',
+      [id], (req, res) => {
+        console.log('------------------------delete notes n stuff--------------------------')
+        //console.log(res.rows)
+        //result.send(res.rows)
+        return;
+        })
+        
+   
+})
+
+app.post('/edit-note', (req, result) => {
+  
+  if (req.signedCookies.name !== 'admin') {
+    res.send({ message: "nope" })
+    console.log("nope")
+    return
+  }
+
+  console.log("beep boop, note edited")
+  
+  const {id, note, note_type} = req.body;///////////////////////////////////////////////////////////////////////
+  console.log(id)
+  console.log(note)
+  console.log(note_type)
+    pool.query('update test.notes set note = $1, note_type = $2 where id = $3',
+      [note,note_type,id], (req, res) => {
+        console.log('------------------------editing notes n stuff--------------------------')
+        
+        return;
+        })
+        
+   
+})
+
 app.get('/read-cookie', (req, res) => {
   if (req.signedCookies.name === 'admin') {
     res.send({ user: 'Alda' });
@@ -71,46 +168,6 @@ app.get('/', (req, res) => {
 })
 
 
-app.get('/ree', (req, result) => {
-
-    // console.log("in ree");
-    // pool.query('alter table test.orders add column orderid serial primary key',
-    //     (req, res) => {
-    //     //console.log(res.status);
-    //         })
-    //         .catch(error => {
-    //         //console.error(error);
-    //     })
-    
-    result.send({message:"init to win it"})
-})
-// app.post('/', (req, res) => {
-//     const query = 'insert into test.customers( first_name,last_name,email) VALUES($1, $2, $3)'
-//     const query2 = 'INSERT INTO test.orders (customerid, date, description,make,model,plate,vin,year) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)'
-//     pool.query(query2,
-//         [1,'2022-03-01','test description','KIA','OPTIMA','123abc','123testingvinNumber',2022],
-//         (req, result) => {
-        
-//         //res.send(result.rows);
-
-
-//     })
-    
-    
-// })
-// app.post('/customer-add', (req, res) => {
-//     console.log(req.body);
-   
-//     const { first, last, email } = req.body;
-//     console.log(first);
-//     pool.query('insert into test.customers( first_name,last_name,email) VALUES($1, $2, $3)',
-//         [first, last, email])
-//         .catch(error => {
-//             console.error(error);
-//             console.log(res);
-//     })
-// })
-
 app.post('/customer-add', (req, res) => {
 
   if (req.signedCookies.name !== 'admin') {
@@ -136,7 +193,7 @@ app.post('/customer-get', (req, res) => {
     console.log("nope")
     return
   }  
-
+  let customers = []
     console.log(" received from customer get");
     //console.log(req.first);
     const { first_name, last_name, email, customerid,id} = req.body;
@@ -145,13 +202,13 @@ app.post('/customer-get', (req, res) => {
     //'select * from test.customers where first_name = $1 AND last_name $2 AND email = $3'
     let query = 'select * from test.customers where first_name = $1';
     let values = [];
-    if (customerid) {
-        console.log('getting customer by id')
+    if (customerid) {//have to clean these up, not sure why I made customerid and id
+        console.log('getting by customerid')
 
         query = 'select * from test.customers where id = $1';
         values = [customerid];
     }
-  else if (id)
+    else if (Number.isInteger(id) )
     {
     console.log('getting customer by id')
 
@@ -160,8 +217,8 @@ app.post('/customer-get', (req, res) => {
     }
     else {
         console.log('getting customer by first name')
-        query = 'select * from test.customers where first_name = $1';
-        values = [first_name];
+        query = 'select * from test.customers where first_name = $1 OR last_name = $2 OR email = $3';
+        values = [first_name,last_name,email];
     }
     
     pool.query(query,values,
