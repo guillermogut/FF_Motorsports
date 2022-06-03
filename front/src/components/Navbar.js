@@ -29,22 +29,22 @@ const Navbar = (props) => {
      
       <div className='navbar'>
         <div>
-          <Link to='/'>Home</Link>
-          
+          {/* <Link to='/'>Home</Link> */}
+          Home
         </div>
         <div>
-           <Link to = '/login' onClick = {() =>reset()}> LogOut</Link>
-          
-        </div>
-        
-        <div>
-          <Link to='/customer-get'>Get Cust</Link>
-          
+           {/* <Link to = '/login' onClick = {() =>reset()}> LogOut</Link> */}
+          Login
         </div>
         
         <div>
-          <Link to='/customer-add'>Add Cust</Link>
-          
+          {/* <Link to='/customer-get'>Get Cust</Link> */}
+          Get
+        </div>
+        
+        <div>
+          {/* <Link to='/customer-add'>Add Cust</Link> */}
+          Add
         </div>
         <div>
           

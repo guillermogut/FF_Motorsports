@@ -3,8 +3,8 @@ const express = require("express");
 const dotenv = require('dotenv')
 const cors = require('cors');
 const axios = require('axios')
-const basicAuth = require('express-basic-auth')
-const cookieParser = require('cookie-parser');
+//const basicAuth = require('express-basic-auth')
+//const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require('path');
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
@@ -13,13 +13,13 @@ const PORT = 5000;
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.use(cookieParser('82e4e438a0705fabf61f9854e3b575af'));
-const auth = basicAuth({
-  users: {
-    BigBoss1964: 'MamaeAmaU3',
-    user: '456',
-  },
-});
+//app.use(cookieParser('82e4e438a0705fabf61f9854e3b575af'));
+// const auth = basicAuth({
+//   users: {
+//     BigBoss1964: 'MamaeAmaU3',
+//     user: '456',
+//   },
+// });
 
 
 app.listen(process.env.PORT || 5000, () => {
@@ -30,20 +30,20 @@ app.use(express.static(path.join(__dirname, 'build')))
 
 // uncomment above and add 'auth' below to args
 
-app.get('/authenticate',auth,(req, res) => {
-    //console.log("awesome sauce")
+// app.get('/authenticate',auth,(req, res) => {
+//     console.log("awesome sauce")
 
-    const options = {
-    httpOnly: true,
-    signed: true,
-    };
+//     const options = {
+//     httpOnly: true,
+//     signed: true,
+//     };
 
-    if (req.auth.user === 'BigBoss1964') {
-    res.cookie('name', 'admin', options).send({ user: 'Alda' });
-  } else if (req.auth.user === 'user') {
-    res.cookie('name', 'user', options).send({ user: 'user' });
-  }
-});
+//     if (req.auth.user === 'BigBoss1964') {
+//     res.cookie('name', 'admin', options).send({ user: 'Alda' });
+//   } else if (req.auth.user === 'user') {
+//     res.cookie('name', 'user', options).send({ user: 'user' });
+//   }
+// });
 
 app.post('/get-notes', (req, result) => {
   
@@ -305,7 +305,7 @@ app.post('/order-add', (req, res) => {
 
 
 
-app.get('/', (req, res) => {
+app.get('/test', (req, res) => {
     
    //  pool.query('select * from test.orders', (req, result) => {
         
@@ -313,8 +313,23 @@ app.get('/', (req, res) => {
 
 
    //  })
-     
-   res.send({thing: "the thing is still here"})
+  // if (req.signedCookies.name !== 'admin') {
+  //   res.send({ message: "nope" })
+  //   console.log("nope")
+  //   return
+  // } 
+  const { first_name, last_name, email,id, orderId } = req.params;
+    
+    let query =''
+    let values = [16];
+    query = 'select * from test.customers';
+    //     values = [id];
+        pool.query(query,
+          (req, result) => {
+          console.log('look at the results below REEEEEEEE')
+            console.log(result.rows);
+            res.send(result.rows);
+          })
     
 })
 
@@ -323,7 +338,7 @@ app.get('/', (req, res) => {
 
 
 app.get('*', (req, res) => {
-    console.log("omg")
+  
     //res.sendFile(path.join('index.html'))
    //res.sendFile(path.join(publicPath, 'index.html'));
 });

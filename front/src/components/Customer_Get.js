@@ -18,7 +18,9 @@ const Customer_Get = () => {
     let [customers, setCustomers] = useState([])
     const [customer, setCustomer] = useState(defaultCustomer)
     //const [searchOption, setSearchOption] = useState([false,false,false,true])
-    let base_url = window.location.origin;
+
+    //let base_url = window.location.origin;
+    let base_url = 'http://localhost:5000/'
     //console.log(customer.first);
     const handleSubmit = (e) => {
         e.preventDefault();
